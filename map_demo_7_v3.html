@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8' />
+    <title>Urban green space fraction - Africa (OECD SWAC)</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css' type='text/css' />
+
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px
+        }
+
+        #map {
+            width: 100%;
+            height: 512px;
+            border: 0px solid #ccc;
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 450px;
+            right: 2.5px;
+            background: #fff;
+            margin-right: 10px;
+            font-family: Helvetica Neue;
+            font-size: 70%;
+            overflow: auto;
+            border-radius: 3px;
+        }
+
+        #legend {
+            padding: 10px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            line-height: 15px;
+            height: 120px;
+            margin-bottom: 40px;
+            width: 50px;
+        }
+
+        .legend-key {
+            display: inline-block;
+            border-radius: 20%;
+            width: 15px;
+            height: 11px;
+            margin-right: 5px;
+            opacity: 0.75;
+        }
+
+        h1 {
+            margin: 0px auto;
+            width: 100%;
+            border: none;
+            border-radius: 3px;
+            font-size: 200%;
+            text-align: center;
+            color: #FFFFFF;
+            background: rgb(54,123,189);
+            font-family: 'Helvetica Neue';
+        }
+        h2 {
+            color: #FFFFFF;
+            font-family: Helvetica;
+            font-size: 150%;
+            position: relative;
+            top: 0px;
+            padding: 10px;
+            background: rgb(45,96,150);
+        }
+        p1 {
+            padding: 0px;
+            margin: 20px;
+            color: #9E9E9E;
+            font-family: Helvetica;
+            font-size: 100%;
+            position: relative;
+            top: 0px;
+            left: 10px;
+        }
+        p2 {
+            color: rgb(0,0,0);
+            font-family: Helvetica;
+            font-size: 50%;
+            position: relative;
+            left: 10px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <div><h1 id="title">Urban green space fraction in Africa<br>
+    Spatial unit: Africapolis urban agglomerations<br>
+    OECD SWAC</h1></div>
+    <!-- <pre id='info'></pre> -->
+    <div id='map'></div>
+    <!-- add legend to map -->
+    <div class='map-overlay' id='legend'><b>Green space fraction:</b></div>
+    <!-- Add some text after the map-->
+    <div><h2>Description and data sources:</h2></div>
+    <div><p1>This map shows the urban green space fraction in African urban agglomerations. 
+        Calculated from Africapolis urban agglomeration areas (shown when zoomed in). Markers' location corresponds to the center of the agglomeration
+        according to the Africapolis dataset. Buildings' footprint 
+        density computed used the Google Open Buildings v1 dataset (circa 2020). Bubble color 
+        according to urban green space fraction (i.e. the fraction of the urban 
+        agglomeration area that is covered by green space). Green space fractions 
+        were calculated using land cover  data from ESA Wolrd Cover 2020 
+        (ESA, 2021). Bubble size according to population size for year 2015
+        (source: OECD Africapolis 2020 dataset). Click on circles to get more information
+         about any city on the map.</p1></div>
+        <br>
+    <div>
+        <p2 style="text-align:center">&copy Jorge E. Patiño, PhD (2022) | jpatinoq@eafit.edu.co | cocovski@gmail.com | @cocovski | +57 316 327 4403</p2></div>
+
+    
+    
+    <script type="text/javascript">
+        // The value for 'accessToken' begins with 'pk...'
+        mapboxgl.accessToken = 
+        'pk.eyJ1Ijoiam9yZ2VwYXRpbm8iLCJhIjoiY2tnc2R0c20zMWVvdTJ5bXRpZ3Z4bDN1dCJ9.2LgsqgR7lXR6YFH2IaNc-w';
+        const map = new mapboxgl.Map({
+            container: 'map', //container id
+            // Replace YOUR_STYLE_URL with your style URL.
+            style: 'mapbox://styles/jorgepatino/cl7qojvxl003715lq9yj206lv', //UGS-Africa-demo3
+            center: [1, 12],
+            zoom: 5
+        });
+        
+    // Add legend for the UGS-metrics layer 
+        map.on('load', () => {
+            const layers = [
+                '0',
+                '0.25',
+                '0.5',
+                '0.75',
+                '0.97'
+                ];
+            const colors = [
+                '#EA854C',
+                '#F8C83A',
+                '#B0CB2A',
+                '#6BB800',
+                '#3B7D40'
+                ];
+            // create legend
+            const legend = document.getElementById('legend');
+
+            layers.forEach((layer, i) => {
+                const color = colors[i];
+                const item = document.createElement('div');
+                const key = document.createElement('span');
+                key.className = 'legend-key';
+                key.style.backgroundColor = color;
+
+                const value = document.createElement('span');
+                value.innerHTML = `${layer}`;
+                item.appendChild(key);
+                item.appendChild(value);
+                legend.appendChild(item);
+            });
+        });
+
+    //Add an event listener that runs when a user clicks on the map element.
+        map.on('click', (event) => {
+            // If the user clicked on one of your markers, get its information.
+            const features = map.queryRenderedFeatures(event.point, {
+                layers: ['UGS-metrics'] // replace with your layer name
+            });
+            if (!features.length) {
+                return;
+            }
+            const feature = features[0];
+
+        /*
+          Create a popup, specify its options
+          and properties, and add it to the map.
+        */
+            const popup = new mapboxgl.Popup({
+                offset: [0, -15],
+                closeButton: true,
+                closeOnClick: true
+            })
+            .setLngLat(feature.geometry.coordinates)
+            .setHTML(
+                `<p><b>${feature.properties.Agglomeration_Name}</b></p>
+                <p>Green fraction: ${feature.properties.ESA_LC_Open_green.toFixed(2)}</p>
+                <p>PM<sub>2.5</sub> (2019): ${feature.properties.X2019.toFixed(2)}</p>
+                <p>Mean temp.: ${feature.properties.annual_mean_temp.toFixed(1)} C</p>
+                <p>Annual prec.: ${feature.properties.annual_precipitation.toFixed(0)} mm</p>
+                <p>Agroecological zone:<br>${feature.properties.AEZ_NAME}</p>
+                <p>Population (2015): ${(feature.properties.Population_2015 / 1000000).toFixed(2)} Μ</p>`
+            )
+            .addTo(map);
+        });
+    
+    // Add a geocoding box to search places (cities)
+    const geocoder = new MapboxGeocoder({
+      // Initialize the geocoder
+      accessToken: mapboxgl.accessToken, // Set the access token
+      mapboxgl: mapboxgl, // Set the mapbox-gl instance
+      marker: false, // Do not use the default marker style
+      placeholder: 'Search for cities in Africa', // Placeholder text for the search bar
+      bbox: [-30.234375,-36.597889,61.171875,39.095963], // Bounding box for Africa, search results will be limited to that area. (?)
+      flyTo: {
+        easing: function(t){
+            return t;
+        },
+        zoom: 9, //to zoom to a specified level (not too much!)
+      }, 
+    });
+    
+    // Add the geocoder to the map
+    map.addControl(geocoder);
+    
+    // Add zoom control ( + / -, reset orientation to North)
+    map.addControl(new mapboxgl.NavigationControl());
+    
+    // Add a scale bar in metric units
+    const scalebar = new mapboxgl.ScaleControl({
+        maxWidth: 100,
+        unit: 'metric'
+    });
+    
+    map.addControl(scalebar);
+    
+    </script>
+    
+</body>
+
+</html>
