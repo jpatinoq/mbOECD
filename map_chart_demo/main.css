@@ -1,0 +1,12 @@
+#legend {
+  width: 250px;
+}
+.c3-region.regionHealthy {
+  fill:  green;
+}
+.c3-region.regionModerate {
+  fill:  orange;
+}
+.c3-region.regionUnhealthy {
+  fill:  red;
+}
