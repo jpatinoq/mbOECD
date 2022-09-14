@@ -175,8 +175,8 @@ const chart = c3.generate({
       }
     },
     y: {
-      min: 10,
-      max: 100,
+      min: 12,
+      max: 145,
       label: {
         text: 'PM2.5 (ug/m3)',
         position: 'outer-middle'
