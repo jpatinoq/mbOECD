@@ -1,2 +1,2 @@
-This subfolder contains the test of map and linked chart with Mapbox.
+This subfolder contains an example of a webmap with a linked chart, created with Mapbox.
 Author: Jorge E. Patiño, PhD
