@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8' />
+    <title>Urban green space fraction - Africa (OECD SWAC)</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.min.js'></script>
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.0/mapbox-gl-geocoder.css' type='text/css' />
+
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px
+        }
+
+        #map {
+            width: 100%;
+            height: 512px;
+            border: 0px solid #ccc;
+        }
+
+        #legend {
+            top:  0;
+            left: 0;
+            padding: 10px;
+            line-height: 15px;
+            width: 100%;
+            font-family: 'Helvetica Neue';
+            text-align: left;
+            font-size: 75%;
+        }
+
+        .bar {
+            margin-top: 10px;
+            width: 98%;
+            height: 15px;
+            background: linear-gradient(to right, #ffce06, #6c960d);
+            opacity: 0.75; 
+        }
+
+        body {
+            background-color: #FDFCF3;
+        }
+
+        h1 {
+            margin: 0px auto;
+            margin-left: 25px;
+            width: 100%;
+            border: none;
+            border-radius: 3px;
+            font-size: 42px;
+            text-align: left;
+            color: #E39659;
+            background: #263B4E;
+            font-family: 'Libre Franklin', sans-serif;
+        }
+        h2 {
+            color: #E39659;
+            font-family: 'Libre Franklin', sans-serif;
+            font-size: 125%;
+            position: relative;
+            top: 0px;
+            padding: 0px;
+            left: 20px;
+        }
+
+        p0{
+            margin:  0px;
+            margin-right: 100px;
+            color: #FFFFFF;
+            font-family: 'Libre Franklin', sans-serif;
+            font-size: 100%;
+            line-height: 22px;
+            position: relative;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+        }
+
+
+        p1 {
+            padding: 0px;
+            margin-left: 0px;
+            margin-right: 50px;
+            color: #263B4E;
+            font-family: 'Libre Franklin', sans-serif;
+            font-size: 100%;
+            line-height: 22px;
+            position: relative;
+            top: 0px;
+            left: 20px;
+        }
+        p2 {
+            color: rgb(0,0,0);
+            font-family: 'Libre Franklin', sans-serif;
+            font-size: 75%;
+            position: relative;
+            left: 10px;
+            right: 50px;
+            text-align: right;
+        }
+
+        .MBpopup .mapboxgl-popup-content{
+            font: 15px/18px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+            background-color: rgb(53,83,108);
+        }
+        .MBpopup .mapboxgl-popup-tip{
+            border-bottom-color: rgb(53,83,108);
+            border-top-color: rgb(53,83,108);
+        }
+
+        .margin1{
+            background: #263B4E;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header style="background-color: #263B4E; padding: 30px;">
+        <img src="./swac-oecd-white.png" width="250"/>
+    </header>
+    <div class="margin1" style="padding: 25px;">
+        <h1 id="title">CLIMATE</h1>
+        <p0>
+            Urban green spaces are strongly related to urban temperature and to the Urban Heat Island (UHI) , and also to air pollution 
+            levels. Our tools help policy makers to better understand the urban green space in relation with other environmental factors such as temperature, rainfall, and air pollution. 
+        </p0>
+    </div>
+    <!-- <pre id='info'></pre> -->
+    <div id='map'></div>
+    <!-- add legend to map -->
+    <div>  </div>
+    <div 
+        id='legend' 
+        class='legend' 
+        style="
+                font-family: Libre Franklin, sans-serif; 
+                font-size: 20px; 
+                font-weight: 700;
+                text-transform: uppercase;
+                color: rgb(53, 83, 108);
+                line-height: 30px;">
+        <strong>
+            Urban green space fraction (0 - 1)
+        </strong>
+        <div class='bar'></div>
+        
+    </div>
+    <!-- Add some text after the map-->
+    <div><h2>Data sources:</h2></div>
+    <div>
+        <p1>
+        This map shows the urban green space cover in African urban agglomerations. 
+        The urban green space cover was estimated for the Africapolis urban agglomeration areas
+        as the percentage of the area of the city that is covered by green spaces (areas with
+        trees, grass, and shrubs). Green space fractions 
+        were calculated using land cover data from ESA Wolrd Cover 2020 
+        (ESA, 2021). Air pollution data (PM<sub>2.5</sub>) from The Atmospheric Composition Analysis Group at Washington University in St. Louis (Aaron van Donkelaar et al., 2021). Climatic variables from WorldClim, Historical Climate Data for 1970-2000 (2020). Agroecological zones
+        from Sebastian (2009). Bubble size according to population size for year 2015
+        (source: OECD Africapolis 2020 dataset). Move the mouse over a city to see more climate related information.
+        </p1>
+    </div>
+        <br>
+    <div>
+        <p2>&copy2022. SWAC/OECD</p2>
+    </div>
+
+    
+    
+    <script type="text/javascript">
+        // The value for 'accessToken' begins with 'pk...'
+        mapboxgl.accessToken = 
+        'pk.eyJ1IjoibWttZCIsImEiOiJjbDlnMzg5eTUwY3ZnNDBzMmN2cHUzNXExIn0.3t4xo2Y1HJ8idfDDyKp7Mg';
+        const map = new mapboxgl.Map({
+            container: 'map', //container id
+            // Replace YOUR_STYLE_URL with your style URL.
+            style: 'mapbox://styles/mkmd/cl9fukm90000e14qs0in5694z', //UGS from OECD mapbox account
+            center: [2, 13.5],
+            zoom: 4
+        });
+
+    // Add legend in horizontal format with gradient from 0: #ffce06 to 1: #6c960d
+
+        /*
+          Create a popup, specify its options
+          and properties, and add it to the map.
+        */
+        const popup = new mapboxgl.Popup({
+            className: "MBpopup",
+            closeButton: false,
+            closeOnClick: false
+        });
+
+    //Add an event listener that runs when a user hovers on the map element.
+        map.on('mouseenter', 'ugs-centroids', (e) => {
+            // change the cursor style as a UI indicator
+            map.getCanvas().style.cursor = 'pointer';
+            // Copy coordinates array
+            const coordinates = e.features[0].geometry.coordinates.slice();
+            const description = 
+                `<strong style="color:white">${e.features[0].properties.agglosName}</strong>
+                <p style="color:white">The estimated urban green space fraction is ${e.features[0].properties.UGS_fraction.toFixed(2)}. The average PM<sub>2.5</sub> concentration in 2019 was estimated at ${e.features[0].properties.PM25_2019.toFixed(2)} &#13197/m<sup>3</sup>. The mean temperature is ${e.features[0].properties.annual_mean_temp.toFixed(1)} C, and the average annual precipitation is ${e.features[0].properties.annual_precipitation.toFixed(0)} mm. The city is located in a ${e.features[0].properties.AEZ_NAME} agroecological zone. The population by 2015 was ${(e.features[0].properties.Pop2015 / 1000000).toFixed(2)} million people.</p>`
+
+            // Ensure that if the map is zoomed out such that multiple
+            // copies of the feature are visible, the popup appears
+            // over the copy being pointed to.
+            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
+
+            popup.setLngLat(coordinates).setHTML(description).addTo(map);
+        });
+
+        map.on('mouseleave', 'ugs-centroids', () => {
+            map.getCanvas().style.cursor = '';
+            popup.remove();
+        });
+    
+    //Add an event listener that runs when a user hovers on the map element.
+        map.on('mousemove', 'ugs-polygons', (e) => {
+            // change the cursor style as a UI indicator
+            map.getCanvas().style.cursor = 'pointer';
+            
+            const description = 
+                `<strong style="color:white">${e.features[0].properties.agglosName}</strong>
+                <p style="color:white">The estimated urban green space fraction is ${e.features[0].properties.UGS_fraction.toFixed(2)}. The average PM<sub>2.5</sub> concentration in 2019 was estimated at ${e.features[0].properties.PM25_2019.toFixed(2)} &#13197/m<sup>3</sup>. The mean temperature is ${e.features[0].properties.annual_mean_temp.toFixed(1)} C, and the average annual precipitation is ${e.features[0].properties.annual_precipitation.toFixed(0)} mm. The city is located in a ${e.features[0].properties.AEZ_NAME} agroecological zone. The population by 2015 was ${(e.features[0].properties.Pop2015 / 1000000).toFixed(2)} million people.</p>`
+            
+            popup.setLngLat(e.lngLat).setHTML(description).addTo(map);
+        });
+
+        map.on('mouseleave', 'ugs-polygons', () => {
+            map.getCanvas().style.cursor = '';
+            popup.remove();
+        });
+
+    // Add a geocoding box to search places (cities)
+    const geocoder = new MapboxGeocoder({
+      // Initialize the geocoder
+      accessToken: mapboxgl.accessToken, // Set the access token
+      mapboxgl: mapboxgl, // Set the mapbox-gl instance
+      marker: false, // Do not use the default marker style
+      placeholder: 'Search for cities in Africa', // Placeholder text for the search bar
+      bbox: [-30.234375,-36.597889,61.171875,39.095963], // Bounding box for Africa, search results will be limited to that area. (?)
+      flyTo: {
+        easing: function(t){
+            return t;
+        },
+        zoom: 8, //to zoom to a specified level (not too much!)
+      }, 
+    });
+    
+    // Add the geocoder to the map
+    map.addControl(geocoder);
+    
+    // Add zoom control ( + / -, reset orientation to North)
+    map.addControl(new mapboxgl.NavigationControl());
+    
+    // Add a scale bar in metric units
+    const scalebar = new mapboxgl.ScaleControl({
+        maxWidth: 100,
+        unit: 'metric'
+    });
+    
+    map.addControl(scalebar);
+    
+
+    </script>
+    
+</body>
+
+</html>
