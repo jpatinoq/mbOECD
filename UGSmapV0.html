@@ -36,8 +36,8 @@
             margin-top: 10px;
             width: 98%;
             height: 15px;
-            background: linear-gradient(to right, #ffce06, #6c960d);
-            opacity: 0.75; 
+            background: linear-gradient(to right, #933709, #FFF601, #057108);
+            opacity: 0.85; 
         }
 
         body {
@@ -191,7 +191,8 @@
         const popup = new mapboxgl.Popup({
             className: "MBpopup",
             closeButton: false,
-            closeOnClick: false
+            closeOnClick: false,
+            maxWidth: 200,
         });
 
     //Add an event listener that runs when a user hovers on the map element.
@@ -202,7 +203,14 @@
             const coordinates = e.features[0].geometry.coordinates.slice();
             const description = 
                 `<strong style="color:white">${e.features[0].properties.agglosName}</strong>
-                <p style="color:white">The estimated urban green space fraction is ${e.features[0].properties.UGS_fraction.toFixed(2)}. The average PM<sub>2.5</sub> concentration in 2019 was estimated at ${e.features[0].properties.PM25_2019.toFixed(2)} &#13197/m<sup>3</sup>. The mean temperature is ${e.features[0].properties.annual_mean_temp.toFixed(1)} C, and the average annual precipitation is ${e.features[0].properties.annual_precipitation.toFixed(0)} mm. The city is located in a ${e.features[0].properties.AEZ_NAME} agroecological zone. The population by 2015 was ${(e.features[0].properties.Pop2015 / 1000000).toFixed(2)} million people.</p>`
+                <p style="color:white; font-size: 90%">
+                    Greenspace cover: ${((e.features[0].properties.UGS_fraction)*100).toFixed(1)}%<br> 
+                    PM<sub>2.5</sub> (2019): ${e.features[0].properties.PM25_2019.toFixed(2)} &#13197/m<sup>3</sup><br>
+                    Mean temperature: ${e.features[0].properties.annual_mean_temp.toFixed(1)} C<br>
+                    Annual precipitation: ${e.features[0].properties.annual_precipitation.toFixed(0)} mm<br>
+                    Agroecological zone: ${e.features[0].properties.AEZ_NAME}<br>
+                    Population (2015): ${(e.features[0].properties.Pop2015 / 1000000).toFixed(2)} M
+                </p>`
 
             // Ensure that if the map is zoomed out such that multiple
             // copies of the feature are visible, the popup appears
@@ -226,7 +234,14 @@
             
             const description = 
                 `<strong style="color:white">${e.features[0].properties.agglosName}</strong>
-                <p style="color:white">The estimated urban green space fraction is ${e.features[0].properties.UGS_fraction.toFixed(2)}. The average PM<sub>2.5</sub> concentration in 2019 was estimated at ${e.features[0].properties.PM25_2019.toFixed(2)} &#13197/m<sup>3</sup>. The mean temperature is ${e.features[0].properties.annual_mean_temp.toFixed(1)} C, and the average annual precipitation is ${e.features[0].properties.annual_precipitation.toFixed(0)} mm. The city is located in a ${e.features[0].properties.AEZ_NAME} agroecological zone. The population by 2015 was ${(e.features[0].properties.Pop2015 / 1000000).toFixed(2)} million people.</p>`
+                <p style="color:white; font-size: 90%">
+                    Greenspace cover: ${((e.features[0].properties.UGS_fraction)*100).toFixed(1)}%<br> 
+                    PM<sub>2.5</sub> (2019): ${e.features[0].properties.PM25_2019.toFixed(2)} &#13197/m<sup>3</sup><br>
+                    Mean temperature: ${e.features[0].properties.annual_mean_temp.toFixed(1)} C<br>
+                    Annual precipitation: ${e.features[0].properties.annual_precipitation.toFixed(0)} mm<br>
+                    Agroecological zone: ${e.features[0].properties.AEZ_NAME}<br>
+                    Population (2015): ${(e.features[0].properties.Pop2015 / 1000000).toFixed(2)} M
+                </p>`
             
             popup.setLngLat(e.lngLat).setHTML(description).addTo(map);
         });
