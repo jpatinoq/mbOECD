@@ -97,8 +97,11 @@
     // Add the geocoder to the map
     map.addControl(geocoder);
     
+    // Add fullscreen control
+    map.addControl(new mapboxgl.FullscreenControl(), 'top-left');
+    
     // Add zoom control ( + / -, reset orientation to North)
-    map.addControl(new mapboxgl.NavigationControl());
+    map.addControl(new mapboxgl.NavigationControl({showCompass: false}), 'top-left');
     
     // Add a scale bar in metric units
     const scalebar = new mapboxgl.ScaleControl({
@@ -107,3 +110,5 @@
     });
     
     map.addControl(scalebar);
+
+
