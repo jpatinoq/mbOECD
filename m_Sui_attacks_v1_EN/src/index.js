@@ -30,8 +30,8 @@
             const description = 
                 `<p style="color:white; font-size: 90%">
                     Fatalities: ${e.features[0].properties.fat}<br> 
-                    Attacker gender: ${e.features[0].properties.gender}<br>
-                    Number of events: ${e.features[0].properties.event}
+                    Gender: ${e.features[0].properties.gender}<br>
+                    Events: ${e.features[0].properties.event}
                 </p>`;
 
             // Ensure that if the map is zoomed out such that multiple

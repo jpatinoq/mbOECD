@@ -29,8 +29,6 @@
             const coordinates = e.features[0].geometry.coordinates.slice();
             const description = 
                 `<p style="color:white; font-size: 90%">
-                    Type of attack: ${e.features[0].properties.SUB_EVENT_TYPE}<br> 
-                    Actor: ${e.features[0].properties.ACTOR1}<br>
                     Fatalities: ${e.features[0].properties.FATALITIES}<br>
                     Year: ${e.features[0].properties.YEAR}
                 </p>`;
