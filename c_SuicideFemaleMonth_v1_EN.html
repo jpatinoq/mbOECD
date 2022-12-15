@@ -116,22 +116,27 @@
       datasets: [{
         label: 'Events',
         data: ['1','3','0','0','0','2','1','3','5','3','1','3','3','4','0','4','3','5','5','3','1','1','1','0','0','0','0','0','0','1','2','2','1','1','2','2','2','2','2','0','2','1','1','0','0','2','0','0','0','0','0','0','1','0','3','0','1','0','0','0','0','0','2','0','0','0','0','3','1','0','0','1','1','0','0','0','0','0','1','0','0','0','0','0'],
-        backgroundColor: ['#236BA8'],
+        backgroundColor: ['rgba(35, 107, 168, 0.75)'], // hex: #236BA8
+        hoverBackgroundColor: ['rgba(35, 107, 168, 1)'],
         borderWidth: 0.5,
+        borderColor: ['rgba(35, 107, 168, 0.75)'],
         barPercentage: 0.5,
         order: 1,
-        yAxisID: 'y1'
+        yAxisID: 'y1',
       },
       {
         label: 'Fatalities',
         data: ['2','14','0','0','0','48','10','62','33','94','5','62','48','122','0','45','63','45','52','16','60','2','2','0','0','0','0','0','0','2','3','13','5','6','3','10','4','8','10','0','10','4','2','0','0','4','0','0','0','0','0','0','7','0','6','0','2','0','0','0','0','0','11','0','0','0','0','14','1','0','0','4','1','0','0','0','0','0','3','0','0','0','0','0'],
-        backgroundColor: ['#E6398A'],
-        borderColor: ['#E6398A'],
+        backgroundColor: ['rgba(230, 57, 138, 0.75)'], // hex #E6398A
+        borderColor: ['rgba(230, 57, 138, 0.75)'], // hex : #E6398A
+        hoverBackgroundColor: ['rgba(230, 57, 138, 1)'],
+        hoverBorderColor: ['rgba(230, 57, 138, 1)'],
+        hoverRadius: 5,
         borderWidth: 2,
         type: 'line',
         radius: 2,
         order: 0,
-        yAxisID: 'y2'
+        yAxisID: 'y2',
       },
       ]
     };
@@ -143,11 +148,14 @@
       options: {
         responsive: true,
         plugins: {
-          stacked100: {
-            enable: true,
-          },
           tooltip: {
             backgroundColor: 'rgb(53,83,108)'
+          },
+          legend: {
+            labels: {
+              usePointStyle: true,
+              pointStyle: 'circle',
+            }
           }
         },
         scales: {
@@ -158,10 +166,10 @@
             min: 0,
             max: 6,
             grid: {
-              display: false
+              display: false,
             },
             ticks: {
-              color: '#236BA8'
+              color: 'rgba(35, 107, 168, 1)'
             }
           },
           y2: {
@@ -171,10 +179,10 @@
             min: 0,
             max: 130,
             grid: {
-              display: true
+              display: true,
             },
             ticks: {
-              color: '#E6398A'
+              color: 'rgba(230, 57, 138, 1)'
             }
           },
           x: {
