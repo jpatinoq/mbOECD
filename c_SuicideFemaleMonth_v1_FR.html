@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Attaques-suicides conduites para des femmes 2014-21</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+      html {
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      body{
+        flex-grow: 1;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+      }
+      .chartMenu {
+        width: 100vw;
+        height: 10px;
+      }
+      .chartMenu p {
+        padding: 10px;
+        font-size: 20px;
+        /* background-color: gray; */
+        font-family: Libre Franklin, sans-serif; 
+        font-size: 1.25rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: rgb(53, 83, 108);
+        line-height: 20px;
+      }
+      .chartMenu span {
+        padding: 10px;
+        font-size: 20px;
+        /* background-color: gray; */
+        font-family: Libre Franklin, sans-serif; 
+        font-size: 1.25rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #E39659;
+        line-height: 20px;
+      }
+      .chartCard {
+        width: 100vw;
+        height: calc(100vh - 20px);
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        padding: 10px;
+        
+      }
+      .chartBox {
+        display: inline-block;
+        position: relative;
+        width: 80vw;
+        height: 80vh;
+        padding: 0px;
+        border-radius: 4px;
+      }
+      p1{
+        position: relative;
+        font-family: Libre Franklin, sans-serif; 
+        color: rgb(53, 83, 108);
+        font-size: 14px;
+        padding: 10px;
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+      }
+      p2{
+        font-family: Libre Franklin, sans-serif; 
+        color: rgb(53, 83, 108);
+        font-size: 12px;
+        height: 15px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="chartMenu">
+      <p>Attaques-suicides<span>conduites par des femmes</span></p>
+      <p1>Attaques-suicices conduites par des femmes, 2014 - 21.</p1>
+    </div>
+
+    <div class="chartCard">
+      <div class="chartBox">
+        <canvas id="myChart"></canvas>
+        <p2>Source: OECD/SWAC à partir des données ACLED (2022).</p2>
+      </div>
+      
+    </div>
+
+    // External scripts
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+
+    // Chart global settings -font size
+    Chart.defaults.font.size = 12; //font size for chart elements
+    Chart.defaults.color = 'rgb(53, 83, 108)'; // font color for labels (not tiptool)
+    Chart.defaults.borderColor = 'rgba(53, 83, 108, 0.15)' // color of grid lines
+
+    // setup     
+    // Data
+    const data = {
+      labels: ['2014-06','2014-07','2014-08','2014-09','2014-10','2014-11','2014-12','2015-01','2015-02','2015-03','2015-04','2015-05','2015-06','2015-07','2015-08','2015-09','2015-10','2015-11','2015-12','2016-01','2016-02','2016-03','2016-04','2016-05','2016-06','2016-07','2016-08','2016-09','2016-10','2016-11','2016-12','2017-01','2017-02','2017-03','2017-04','2017-05','2017-06','2017-07','2017-08','2017-09','2017-10','2017-11','2017-12','2018-01','2018-02','2018-03','2018-04','2018-05','2018-06','2018-07','2018-08','2018-09','2018-10','2018-11','2018-12','2019-01','2019-02','2019-03','2019-04','2019-05','2019-06','2019-07','2019-08','2019-09','2019-10','2019-11','2019-12','2020-01','2020-02','2020-03','2020-04','2020-05','2020-06','2020-07','2020-08','2020-09','2020-10','2020-11','2020-12','2021-01','2021-02','2021-03','2021-04','2021-05'],
+      datasets: [{
+        label: 'Attaques',
+        data: ['1','3','0','0','0','2','1','3','5','3','1','3','3','4','0','4','3','5','5','3','1','1','1','0','0','0','0','0','0','1','2','2','1','1','2','2','2','2','2','0','2','1','1','0','0','2','0','0','0','0','0','0','1','0','3','0','1','0','0','0','0','0','2','0','0','0','0','3','1','0','0','1','1','0','0','0','0','0','1','0','0','0','0','0'],
+        backgroundColor: ['rgba(35, 107, 168, 0.75)'], // hex: #236BA8
+        hoverBackgroundColor: ['rgba(35, 107, 168, 1)'],
+        borderWidth: 0.5,
+        borderColor: ['rgba(35, 107, 168, 0.75)'],
+        barPercentage: 0.5,
+        order: 1,
+        yAxisID: 'y1',
+      },
+      {
+        label: 'Victimes',
+        data: ['2','14','0','0','0','48','10','62','33','94','5','62','48','122','0','45','63','45','52','16','60','2','2','0','0','0','0','0','0','2','3','13','5','6','3','10','4','8','10','0','10','4','2','0','0','4','0','0','0','0','0','0','7','0','6','0','2','0','0','0','0','0','11','0','0','0','0','14','1','0','0','4','1','0','0','0','0','0','3','0','0','0','0','0'],
+        backgroundColor: ['rgba(230, 57, 138, 0.75)'], // hex #E6398A
+        borderColor: ['rgba(230, 57, 138, 0.75)'], // hex : #E6398A
+        hoverBackgroundColor: ['rgba(230, 57, 138, 1)'],
+        hoverBorderColor: ['rgba(230, 57, 138, 1)'],
+        hoverRadius: 5,
+        borderWidth: 2,
+        type: 'line',
+        radius: 2,
+        order: 0,
+        yAxisID: 'y2',
+      },
+      ]
+    };
+
+    // config 
+    const config = {
+      type: 'bar',
+      data,
+      options: {
+        responsive: true,
+        plugins: {
+          tooltip: {
+            backgroundColor: 'rgb(53,83,108)'
+          },
+          legend: {
+            labels: {
+              usePointStyle: true,
+              pointStyle: 'circle',
+            }
+          }
+        },
+        scales: {
+          y1: {
+            //beginAtZero: true,
+            type: 'linear',
+            position: 'left',
+            min: 0,
+            max: 6,
+            grid: {
+              display: false,
+            },
+            ticks: {
+              color: 'rgba(35, 107, 168, 1)'
+            }
+          },
+          y2: {
+            //beginAtZero: true,
+            type: 'linear',
+            position: 'right',
+            min: 0,
+            max: 130,
+            grid: {
+              display: true,
+            },
+            ticks: {
+              color: 'rgba(230, 57, 138, 1)'
+            }
+          },
+          x: {
+            grid: {
+              display: false
+            }
+          }
+        },
+        //indexAxis: 'y',
+      }
+    };
+
+    // render init block
+    const myChart = new Chart(
+      document.getElementById('myChart'),
+      config
+    );
+    </script>
+  </body>
+</html>

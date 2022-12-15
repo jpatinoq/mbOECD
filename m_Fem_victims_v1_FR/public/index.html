@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8' />
+    <title>Femmes victimes de violence politique - Afrique (OECD SWAC)</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.9.2/mapbox-gl.css' rel='stylesheet' />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.mapbox.com/mapbox-assembly/v1.5.1/assembly.min.css" rel="stylesheet">
+    <script async defer src="https://api.mapbox.com/mapbox-assembly/v1.5.1/assembly.js"></script>
+    <link rel="stylesheet" href="../src/main.css"/>
+</head>
+
+<body>
+    <!-- add map -->
+    <div id='map'></div>
+    
+    <!-- add legend container -->
+    <div 
+        style="
+            border: 1px solid rgb(201, 185, 159); 
+            border-radius: 4px;"
+            >
+        <div style="width: 50%; height: 100px;">
+            <!-- add legend title -->
+            <div id='legend' class='legend'>
+                <strong>
+                    Victimes
+                </strong>        
+            </div>
+            <!-- add legend circles and labels -->
+            <div>
+                <span class='dot' 
+                 style="margin-left: 10px; 
+                        height: 6px; 
+                        width: 6px;
+                        background-color: rgba(35, 107, 168, 0.7);
+                        border-color: rgba(35, 107, 168, 1);
+                        border-width: 1px;
+                        border-style: solid;
+                        vertical-align: middle;
+                        ">
+                </span>
+                <span class="label" style="margin-left: 0px">0</span>
+                <span class='dot' 
+                 style="margin-left: 10px; 
+                        height: 6px; 
+                        width: 6px;
+                        background-color: rgba(230, 57, 138, 0.7);
+                        border-color: rgba(230, 57, 138, 1);
+                        border-width: 1px;
+                        border-style: solid;
+                        vertical-align: middle;
+                        ">
+                </span>
+                <span class="label" style="margin-left: 6px;">1</span> 
+                <span class='dot' 
+                 style="margin-left: 10px; 
+                        height: 25px; 
+                        width: 25px;
+                        background-color: rgba(230, 57, 138, 0.7);
+                        border-color: rgba(230, 57, 138, 1);
+                        border-width: 1px;
+                        border-style: solid;
+                        vertical-align: middle;
+                        ">
+                </span>
+                <span class="label" style="margin-left: 15px;">80</span>
+                <span class='dot' 
+                 style="margin-left: 10px; 
+                        height: 50px; 
+                        width: 50px;
+                        background-color: rgba(230, 57, 138, 0.7);
+                        border-color: rgba(230, 57, 138, 1);
+                        border-width: 1px;
+                        border-style: solid;
+                        vertical-align: middle;
+                        ">
+                </span>
+                <span class="label" style="margin-left: 25px;">157</span>         
+            </div>
+            
+        </div>
+    </div> 
+    <script src="../src/index.js"></script>   
+</body>
+
+</html>
