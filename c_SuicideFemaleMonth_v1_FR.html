@@ -186,7 +186,13 @@
             }
           },
           x: {
-            
+            ticks: {
+              maxRotation: 0,
+              autoSkip: false,
+              callback: function(val, index) {
+                return index % 12 === 0 ? this.getLabelForValue(val).substring(0,4): '';
+              }
+            },
             grid: {
               display: false
             }
